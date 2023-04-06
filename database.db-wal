@@ -1,0 +1,25 @@
+from peewee import *
+from playhouse.sqliteq import SqliteQueueDatabase
+
+db = SqliteQueueDatabase("database.db")
+
+
+class Users(Model):
+    user_id = BigIntegerField(default=0)
+    username = TextField(default="")
+    balance = BigIntegerField(default=0)
+    invited_by = BigIntegerField(default=0)
+    unlimited = TextField(default="")
+    subscribed = BigIntegerField(default=0)
+    percentage = FloatField(default=0)
+    label = TextField(default="")
+
+    class Meta:
+        database = db
+        db_table = "Users"
+
+
+def connect():
+    db.connect()
+    Users.create_table()
+    print("Открыл базу данных")
